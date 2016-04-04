@@ -1,0 +1,14 @@
+with t(cid, product)
+as(
+select o.CustomerID, o.ProductName  from Orders o
+where o.PurchaiseDatetime between DATEADD(MONTH,-1, getdate()) and GETDATE()
+group by o.CustomerID,o.ProductName
+)
+select * from Customers c 
+where
+ exists        (select 1 from t where t.cid=c.CustomerID and t.product='milk')
+ and not exists(select 1 from t where t.cid=c.CustomerID and t.product='sour')
+ 
+ 
+ 
+ 
